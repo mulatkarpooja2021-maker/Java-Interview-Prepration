@@ -1,0 +1,3457 @@
+prasad.keshav.sarang@accenture.com  => TIAA
+rithika.jadhav@accenture.com        =>DEUTSCHE BANK
+swathi.desigan@accenture.com        =>JPMC
+a.mohammad.irfan@accenture.com    =>Thrive
+
+shweta.bharti@accenture.com        =>Insurance domain Position filled up
+
+
+I worked on an Accenture Federal Services project supporting the U.S. Department of Education’s Federal Student Aid systems, primarily around the Common Origination and Disbursement (COD) platform. The system manages end‑to‑end processing of student financial aid such as Pell Grants and Direct Loans across different award years, ensuring compliance, accuracy, and scalability for millions of students and institutions.”
+
+
+I worked on an Accenture Federal Services project for the U.S. Department of Education. The project supports systems that help manage and distribute financial aid to students, such as grants and loans, for different academic years
+
+
+As a backend developer, I worked on building and enhancing REST APIs using Java and Spring Boot to support federal student aid processing workflows, with a strong focus on data integrity, performance, and security
+
+
+The system helps schools and the government manage student financial aid data accurately for each academic year, making sure students receive the right aid at the right time.
+
+
+
+
+
+CACIB LOT2 = > 4867710
+
+Devops > 4699848
+
+Spring Boot Deploy on EC2 
+https://youtu.be/uAHjGYujwxQ?si=RLi5lgd5SC95BB61
+==============================================================
+Kafka
+https://youtu.be/ei6fK9StzMM?si=BSQ0iaKlNAG7KDZC
++++++++++==============================================
+Spring boot question ansewer
+https://www.youtube.com/watch?v=XilRv9wJhzc&t=150s
+
+
+
+Core java concepts:
+What is difference between Interface and AbstractClass
+Feature			Interface			Abstract Class
+Used for		Defining contract/behavior	Providing a base template
+Inheritance		Supports multiple inheritance	Single inheritance only
+
+Interface : does not have member variable
+
+
+Rules for Creating an Immutable Class
+Once we create the object, we can not modify the state of object(modify the member variable)
+An immutable object’s state is set once, usually in the constructor, and never changes after that.
+String, Integer all are immutable
+Immutable objects are inherently thread-safe.
+No risk of one thread changing the state while another reads it.
+No need for synchronized blocks or locks.
+
+Rule	Explanation
+final class		Prevents inheritance (subclass could break immutability)
+private final fields	Can't change after construction
+No setters		Avoid methods that modify fields
+Initialize fields via constructor	Values set only once
+Return deep copies for mutable fields	Prevent external modifications
+
+
+
+ public UserSession(String userId, Set<String> roles, Instant loginTime) {
+        this.userId = userId;
+        this.roles = Set.copyOf(roles); // defensive copy,immutable set
+        this.loginTime = loginTime;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public Set<String> getRoles() {
+        return roles; // safe (unmodifiable)
+    }
+
+    public Instant getLoginTime() {
+        return loginTime;
+    }
+
+or copy of date object retun in get method.
+
+public Date getJoiningDate() {
+    return new Date(joiningDate.getTime());
+}
+
+
+Multithreading is a subset of multitasking where a single process is divided into multiple threads, and each thread can run independently. Threads within the same process share the same memory space but can execute different tasks concurrently.
+
+
+========================================================
+
+public class DuplicateCount {
+    public static void main(String[] args) {
+        List<Integer> numbers = Arrays.asList(1, 2, 3, 1, 2, 3, 4, 1, 3, 1);
+
+        Map<Integer, Long> counts = numbers.stream()
+            				   .collect(Collectors.groupingBy(Function.identity(), 
+							Collectors.counting()));
+
+        // Print only repeated values
+        counts.entrySet().stream()
+            .filter(entry -> entry.getValue() > 1)
+            .forEach(entry -> 
+                System.out.println(entry.getKey() + " = " + entry.getValue()));
+    }
+
+people.sort(Comparator.comparing(Person::getName)
+                .thenComparing(Person::getAge)
+                .thenComparing(Person::getSalary));
+
+
+
+Analytical operations using java8
+
+
+Filter rows → filter
+Project columns → map
+Flatten arrays/lists → flatMap
+Aggregate → reduce, summarizing, summing, averaging, counting
+Group → groupingBy (with downstream collectors)
+Binary split → partitioningBy
+Top‑N → sorted(...).limit(n) (per group: group then sort each bucket)
+Pagination → skip(page*size).limit(size)
+Uniq/Sort → distinct, sorted
+Collect → toList, toSet, toMap, joining, collectingAndThen
+
+
+
+
+
+
+
+
+Difference between toList and Collectors.toList()
+
+If you’re on Java 16+ and don’t need to mutate the result, prefer toList().
+If you need to modify the result (add/remove), use Collectors.toList() or
+
+==================================================================================================================
+Singlton Class
+
+public class MySingleton {
+
+    private static MySingleton instance;
+
+    private MySingleton() {
+        if (instance != null) {
+            throw new RuntimeException("Use getInstance() to create the singleton");
+        }
+    }
+
+    public static MySingleton getInstance() {
+        if (instance == null) {
+            instance = new MySingleton();
+        }
+        return instance;
+    }
+}
+
+=======================================================================================================================
+Java 8 
+What is a Functional Interface in Java 8?
+A Functional Interface is an interface that contains exactly one abstract method. It can have multiple default or static methods.
+
+Lambda expressions provide a clear and concise way to implement the single method of a functional interface.
+
+Introduced in Java 8, Stream API provides a declarative approach for processing sequences of elements (collections, arrays).
+Intermediate: filter(), map(), sorted()
+Terminal: collect(), forEach(), reduce()
+  int max = numbers.stream()
+                .reduce(Integer::max)
+                .orElseThrow();
+
+T reduce(T identity, BinaryOperator<T> accumulator);
+identity: The initial value.
+accumulator: A function that combines two elements.
+
+
+The reduce() method in Java 8 is a terminal operation in the Stream API that reduces the elements of a stream to a single value by repeatedly applying a binary operator. It is commonly used for aggregation operations like summing, concatenating, or finding the maximum/minimum.
+
+====================================================================================================================================================
+
+-------------------------------------------------------------------------------------------|
+Type		|	Description				|	Example
+-------------------------------------------------------------------------------------------|
+-Intermediate	|	Return another stream, lazy		|	map(), filter()
+-------------------------------------------------------------------------------------------|
+Terminal	|	Produces a result, triggers evaluation  |	collect(), forEach()
+-------------------------------------------------------------------------------------------|
+
+Optional<User> optionalUser = Optional.ofNullable(user);
+
+String name = optionalUser
+                .map(User::getName)
+                .orElse("Default Name");
+
+Why were default methods introduced in Java 8 interfaces?
+Main reason:
+To enable backward compatibility when adding new methods to interfaces without breaking the classes that already implement them.
+for eg: List s interface having 
+
+default Stream<E> stream()
+default Stream<E> parallelStream()
+
+Even though List is an interface, it can define these static methods because interfaces in Java 8+ can contain static methods with full implementations — they are not inherited by implementing classes like ArrayList.
+List.of(...) returns an immutable list, while ArrayList is mutable — so putting this factory inside ArrayList would break that intention.
+
+
+interface A {
+    default void hello() {
+        System.out.println("Hello from A");
+    }
+}
+
+interface B {
+    default void hello() {
+        System.out.println("Hello from B");
+    }
+}
+
+class MyClass implements A, B {
+    @Override
+    public void hello() {
+        // Must resolve the ambiguity
+        A.super.hello(); // or B.super.hello();
+    }
+}
+
+
+
+
+Feature	Singleton	
+Purpose	Ensure only one instance of a class
+Focuses on Object count (one instance only)
+Access	Usually accessed via getInstance()
+Thread Safety	Needs special care (e.g., double-checked locking)
+Value objects (e.g., String, LocalDate)
+Runtime.getRuntime()
+
+Break Rules
+Problem: Reflection can access private constructors and create new instances.
+Constructor<MySingleton> constructor = MySingleton.class.getDeclaredConstructor();
+constructor.setAccessible(true);
+MySingleton instance2 = constructor.newInstance();
+
+Solution: Add a constructor check to prevent multiple instances:
+private MySingleton() {
+    if (instance != null) {
+        throw new RuntimeException("Use getInstance() to create singleton");
+    }
+
+Problem: Deserializing a singleton object creates a new instance.
+Solution: Implement readResolve() to return the existing instance.
+protected Object readResolve() {
+    return getInstance(); // Return existing singleton
+}
+
+Problem: If Singleton class implements Cloneable, clone() can create another instance.
+override clone() and block cloning.
+@Override
+protected Object clone() throws CloneNotSupportedException {
+    throw new CloneNotSupportedException("Cloning not allowed for singleton");
+}
+
+Immutable::Ensure state of object cannot change
+Object state (unchangeable once created)
+Created via constructor or factory
+Often thread-safe by default	
+Use Case	Global shared config, logger, cache manager	
+String, Integer, LocalDate
+
+Problem: In multithreaded environments, two threads can enter the getInstance() method simultaneously and create two objects.
+ Use double-checked locking with volatile:
+private static volatile MySingleton instance;
+
+public static MySingleton getInstance() {
+    if (instance == null) {
+        synchronized (MySingleton.class) {
+            if (instance == null) {
+                instance = new MySingleton();
+            }
+        }
+    }
+    return instance;
+}
+
+
+volatile ensures:
+-----------------------------------------------------------------------------------------------------------------------------------
+Visibility — Every thread sees the most recent value of the variable.
+
+No Caching — Prevents caching of the variable at thread level.
+
+Ordering — Prevents instruction reordering that could cause unpredictable behavior.
+
+1) How do you design REST API, if u want to access Arraylist(without using concurrency API).-using SingleThreadExecutor framework
+2) How do enable caching in memory and how do u evict least accessible resource. in every 5min job is checking.
+3) N+1 hibernate issue
+4) JVM Memory structure.
+5) if same class is loaded by spring boot and third party which file JVM will load.
+6) what will be sequence of loading class file A< B< C, D can we change sequence?
+Default: Classes are loaded on-demand, based on usage.
+
+Order not fixed: JVM does not follow alphabetical or declaration order.
+
+You can control loading: via new, static reference, or Class.forName()
+7) how do you design the stock price reflects at real time
+ 
+1) Core Java Analytical questions on collections?
+2) Mutithreading questions
+3) Camel Integration
+4) database query and performance
+5) Spring JPA Native query
+6) Query optimization
+
+Feature	@RequestMapping	@PostMapping
+HTTP Methods	Supports all (GET, POST, PUT, etc.)	Only POST
+
+
+EXPLAIN SELECT * FROM employees WHERE age = 35;
+give result
+id	select_type	table	type	possible_keys	key	rows	Extra
+1	SIMPLE	employees	ALL	NULL	NULL	1000000	Using where
+Apply index on age
+
+then check table scan
+
+id	select_type	table	type	possible_keys		key			rows	Extra
+1	SIMPLE	employees	ref	idx_employees_age	idx_employees_age	5000	Using index
+
+only matching rows
+Find second largest salary
+SELECT *
+FROM (
+    SELECT *, RANK() OVER (ORDER BY salary DESC) AS salary_rank
+    FROM employee
+) ranked
+WHERE salary_rank = 2;
+
+========================================================================
+
+Stereotype annotations in Spring (@Component, @Service, @Repository, @Controller) mark classes for automatic detection and dependency injection via component scanning.
+They help organize code by role (business, DAO, web, etc.) and enable Spring-specific features like exception translation or request handling.
+
+
+@RequestBody
+Used to bind the entire request body (usually JSON) to a Java object.
+Commonly used in POST or PUT for creating or updating resources.
+
+@PostMapping("/users")
+public User createUser(@RequestBody User user) {
+    return userService.save(user);
+}
+
+
+
+Use @PathVariable when the value is an identifier that uniquely represents a resource.
+
+Example: /users/{userId} → Fetch a specific user.
+
+Use @RequestParam for optional or filtering parameters.
+
+Example: /users?age=25&city=NY → Filter users by age and city.
+
+
+Design REST API
+-------------------------------------------------------------------
+
+HTTP	Method	Operation	Example URL	Description
+GET	Read			/users		Get all users
+GET	Read			/users/{id}	Get a specific user
+POST	Create			/users		Create a new user
+PUT	Update			/users/{id}     Update user details
+DELETE	Delete			/users/{id}	Delete a user
+---------------------------------------------------------------------
+Handle Errors Gracefully
+
+200 OK	Request successful
+201 Created			Resource created
+400 Bad Request			Invalid request data
+401 Unauthorized		Authentication required
+403 Forbidden			Access denied
+404 Not Found			Resource not found
+500 Internal Server Error	Server-side issue
+------------------------------------------------------------------------
+Implement Caching for Performance Optimization
+Use Redis or in-memory caching to improve performance.
+
+
+Why is SAML Used?
+Enables SSO: Users sign in once and access multiple applications.
+Improves Security: Reduces the risk of password-related attacks.
+Enhances User Experience: No need to remember multiple passwords.
+Works Across Domains: Used in enterprise systems, cloud applications, etc.
+
+
+
+DELETE FROM table_name A  
+WHERE ROWID > (SELECT min(ROWID) FROM table_name B WHERE A.col = B.col); 
+delete from Emp1 a 
+
+where rowid > (select min(rowid) from Emp1 b 
+where b. Name1=a. Name1 
+and b. Age1=a. Age1); 
+
+
+
+@OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
+private List<Employee> employees;
+
+Only Department is loaded initially.
+
+employees are fetched only when getEmployees() is called.
+
+@OneToMany(mappedBy = "department", fetch = FetchType.EAGER)
+private List<Employee> employees;
+When you fetch a Department, Hibernate also fetches all Employees immediately—even if you don’t use them.
+
+=======================================================
+The proxy is responsible for intercepting method calls and delegating them to the thread pool.
+The Executor determines how the asynchronous tasks are managed (e.g., thread pool size, queue capacity).
+Internal calls within the same class bypass the proxy, which is why moving the @Async method to a separate bean ensures proper asynchronous executio
+
+Asynchronous operation
+@Configuration
+@EnableAsync
+public class AsyncConfig {
+
+    @Bean(name = "taskExecutor")
+    public Executor taskExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(5);
+        executor.setMaxPoolSize(10);
+        executor.setQueueCapacity(25);
+        executor.setThreadNamePrefix("IAMAsync-");
+        executor.initialize();
+        return executor;
+    }
+}
+
+@Service
+public class NotificationService {
+
+    @Async("taskExecutor")
+    public void sendWelcomeNotification(String userEmail) {
+        // Simulate sending a welcome email
+        try {
+            Thread.sleep(1500); // Simulate email sending delay
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        // In real implementation, integrate with an email service provider.
+        System.out.println("Notification Sent to: " + userEmail);
+    }
+}
+
+Difference between future and completableFuture
+
+ExecutorService executor = Executors.newSingleThreadExecutor();
+Future<String> future = executor.submit(() -> {
+    Thread.sleep(1000);
+    return "Future Result";
+});
+System.out.println(future.get()); // Blocks until the result is available
+executor.shutdown();
+
+CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> {
+    try {
+        Thread.sleep(1000);
+    } catch (InterruptedException e) {
+        throw new IllegalStateException(e);
+    }
+    return "CompletableFuture Result";
+});
+completableFuture.thenAccept(System.out::println); // Non-blocking
+
+Feature
+Future   =>block the main thread till will get future.get()
+CompletableFuture => Non blocking operation, support chaining
+
+es — in async mode:
+
+The servlet thread is released immediately after initiating the async request.
+
+The response is dispatched later from another thread once processing is complete.
+
+This is handled via Servlet 3.0 async support + Spring’s async processing model.
+       
+Use Future if you’re doing simple async execution and are okay with blocking.
+
+Use CompletableFuture if you need advanced async workflows, non-blocking operations, or chaining.
+
+=================================================================================================
+
+shutdown() =>Completes already submitted?
+shutdownNow() => (tries to interrupt them) and Returns pending tasks
+
+==================================================================================================
+
+The @SpringBootApplication annotation is a convenience annotation in Spring Boot that combines @Configuration, @EnableAutoConfiguration, and @ComponentScan
+
+Automatic Configuration: @EnableAutoConfiguration
+It scans the classpath for libraries and frameworks (e.g., Spring Data JPA, Spring Web, etc.) and configures beans automatically.
+For example, if spring-boot-starter-web is on the classpath, it configures a DispatcherServlet and other web-related beans.
+
+The @ComponentScan(basePackages = "org.tutorial") tells Spring to scan the org.tutorial package and its sub-packages for components.
+Classes like @Component, @Service, @Repository, or @Controller in the specified package will be automatically registered as beans in the Spring context.
+
+
+@Configuration : to create bean
+====================================================================================================================================================
+IoC Container: The core of Spring, responsible for managing beans and their dependencies. 
+Beans: Plain Old Java Objects (POJOs) that are managed by the IoC container. 
+Bean Lifecycle: The process of a bean's existence within the container, from instantiation to destruction. 
+Dependency Injection (DI): The mechanism by which the IoC container provides dependencies to beans. 
+Bean Lifecycle Stages:
+Instantiation: The IoC container creates an instance of the bean.
+Dependency Injection: The container injects dependencies into the bean, either through constructor injection, setter injection, or field injection.
+Initialization: After instantiation and dependency injection, the container calls initialization methods, such as those annotated with @PostConstruct or defined via init-method in configuration files.
+Usage: The bean is now ready for use within the application.
+Destruction: When the IoC container is closed, it calls the destruction methods, such as those annotated with @PreDestroy or defined via destroy-method in configuration files, to perform cleanup tasks before the bean is destroyed. 
+=========================================================================================================================================================
+singleton	Default scope. Only one instance per Spring container.	"singleton"	Stateless services, utility components
+prototype	A new instance is created each time it's requested.	"prototype"	Stateful beans, custom per-use objects
+request	
+session
+application
+
+
+
+================================================================
+
+SAML and KEYCLOACK
+
+User → SP (/saml/login)
+       ↓
+Redirect to IdP (Keycloak login)
+       ↓
+Keycloak authenticates user
+       ↓
+Keycloak sends signed SAML Assertion to SP
+       ↓
+SP verifies it → user is logged in 
+
+====================================================================
+
+@springBootConfiguration=@EnableAutoConfiguration(adding h2databse jar from pom.xm)+@componentScan(scan the base packages for creating bean)+@Configuration
+
+Class Type	Use Annotation	Why
+Business logic	@Service	Semantically clear it's a service
+DAO layer	@Repository	Enables exception translation (JPA)
+Web controller	@Controller or @RestController	MVC-specific
+Generic bean	@Component	No special semantics needed
+
+
+
+
+What is difference between @Bean and @Component
+@Bean – What Is It?
+Declares a method that returns a bean object.
+
+Used inside a class annotated with @Configuration
+
+ @Component – What Is It?
+Marks a class as a Spring-managed bean.
+
+Detected automatically via component scanning.
+
+you're integrating a third-party class(Redis Configuration , with ) with @Bean to get RedisTemplate/RedisCatchManger not annotated with @Component
+
+You need to set constructor args manually, inject properties, or decorate
+
+@Transaction
+Let’s say:
+
+Transaction A reads a record.
+
+Transaction B updates and commits that record.
+
+In READ_COMMITTED, Transaction A will:
+
+Read the original value before B commits.
+
+But if it reads again after B commits, it will get the updated value (non-repeatable read).
+
+==============================================================
+
+
+VAlidation we can use at DTO 
+@NotNull(message="User name should not be blank")
+@Email, @NotBlank,@Pattern(regexp="^\\")
+
+at Contoller end point use @valid
+
+public ResponseEntity<User> getUser(@RequestBody @Valid UserRequestDTOl)
+
+
+ExceptionHandling
+
+@ResponseStatus(HttpStatus.InternalServerError)
+use @ExceptionHandle(UserNotFoundException.class)
+
+====================================================
+
+
+Group: com.mycompany
+
+Artifact: inventory-api
+
+It will generate:
+
+xml
+Copy
+Edit
+<groupId>com.mycompany</groupId>
+<artifactId>inventory-api</artifactId>
+<version>0.0.1-SNAPSHOT</version>
+===============================================
+
+SPRING JPA
+
+1. REQUIRED (default)
+
+Joins the existing transaction if available; else creates a new one.
+
+Use Case: General service methods.
+
+2. REQUIRES_NEW
+
+Always creates a new transaction, suspending any existing one.
+
+Use Case: Logging, auditing, or any operation that must commit independently.
+
+3. SUPPORTS
+
+Uses the current transaction if available; else runs without one.
+
+Use Case: Read operations where a transaction is optional.
+
+4. NOT_SUPPORTED
+
+Always runs without a transaction. Suspends any existing one.
+
+Use Case: Read-only operations or external service calls.
+
+5. NEVER
+
+Throws an exception if there is an active transaction.
+
+Use Case: Enforce that no transaction should exist.
+
+6. MANDATORY
+
+Must run inside an existing transaction; throws an exception if none.
+
+Use Case: Helper methods that require a transaction context.
+
+7. NESTED
+
+Starts a nested transaction within the existing one using savepoints.
+
+Use Case: When you want to roll back part of a transaction without affecting the whole.
+=================================================================================
+
+What is Spring Data JPA and how does it relate to Hibernate?
+Spring Data JPA is a part of the Spring Data project that simplifies JPA-based data access layers. Under the hood, it uses Hibernate or other JPA providers.
+
+What is the difference between CrudRepository, JpaRepository, and PagingAndSortingRepository?
+
+CrudRepository: Basic CRUD operations.
+
+PagingAndSortingRepository: Adds pagination and sorting.
+
+JpaRepository: Extends both, adds JPA-specific methods like flush(), batch operations.
+
+How does Spring Data JPA generate queries from method names?
+It uses method name conventions to derive queries, e.g., findByUsernameAndStatus(String username, String status).
+
+What is the purpose of @Query annotation?
+Used to define custom JPQL or native SQL queries within repository interfaces.
+
+What is the difference between @Entity, @Table, and @Embeddable?
+
+@Entity: Marks a class as a JPA entity.
+
+@Table: Specifies the table name (optional).
+
+@Embeddable: Used for value types to be embedded in an entity.
+
+🔹 Advanced & Scenario-Based:
+What is the default transaction propagation in Spring Data JPA repositories?
+REQUIRED. Methods run in the current transaction or create a new one if none exists.
+
+What is the difference between merge() and persist() in JPA?
+
+persist(): Adds a new entity to the persistence context.
+
+merge(): Updates an existing entity or saves it if detached.
+
+How do you handle the N+1 select problem in JPA?
+
+-- 1 query
+SELECT * FROM orders;
+
+-- N queries (one per order)
+SELECT * FROM items WHERE order_id = 1;
+SELECT * FROM items WHERE order_id = 2;
+SELECT * FROM items WHERE order_id = 3;
+...
+
+Use join 
+@Query("SELECT o FROM Order o JOIN FETCH o.items")
+List<Order> findAllWithItems();
+
+it means
+SELECT o.*, i.*
+FROM orders o
+JOIN items i ON o.id = i.order_id; --reduce N+1 problem
+
+or lazy loading
+
+
+Use JOIN FETCH, @EntityGraph, or enable batch fetching.
+
+What is optimistic vs pessimistic locking in JPA?
+
+Optimistic: Uses versioning (@Version). Assumes low contention.
+
+Pessimistic: Locks the row in the DB. Use @Lock(LockModeType.PESSIMISTIC_WRITE).
+
+What are some performance optimization techniques in Spring JPA?
+
+Batch inserts/updates
+
+Fetch joins
+
+Proper indexing
+
+Lazy loading (with caution)
+
+Second-level cache (e.g., EhCache, Redis)
+
+🔹 Bonus Questions for Senior Roles:
+How do you manage transactions across multiple microservices with Spring Data JPA?
+Use eventual consistency patterns like Sagas, or leverage distributed transaction managers (e.g., Atomikos, Narayana).
+
+How can you audit entity changes (createdBy, modifiedBy, timestamps)?
+Use @CreatedDate, @LastModifiedDate with @EntityListeners(AuditingEntityListener.class).
+
+Explain the lifecycle of a JPA entity.
+New → Managed → Detached → Removed
+
+What are the implications of using fetch = FetchType.EAGER vs LAZY?
+EAGER loads the association immediately, which can cause performance issues. LAZY defers loading until accessed.
+
+How do you write a dynamic query in Spring Data JPA?
+Use Specification<T> with JpaSpecificationExecutor, or CriteriaBuilder.
+
+flush() ≠ commit(): It pushes changes to the DB but doesn’t make them permanent (i.e., you can still roll back).
+
+Calling it too often can hurt performance.
+
+JpaRepository
+Purpose: Extends CrudRepository and PagingAndSortingRepository. Adds JPA-specific features.
+
+Key Extra Features:
+
+Batch operations: saveAll(), deleteAllInBatch()
+
+Flush support: flush(), saveAndFlush()
+
+Pagination & sorting
+@Service
+public class EmployeeService {
+
+    @Autowired
+    private EmployeeRepository repository;
+
+    public Page<Employee> getEmployees(int page, int size){
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        return repository.findAll(pageable);
+    }
+}
+
+
+PageRequest.of(0,10)
+
+Means:
+
+Page 0 → first 10 records
+Page 1 → next 10 records
+
+Pageable pageable =
+        PageRequest.of(page, size, Sort.by("salary").descending());
+
+Example:
+
+GET /employees?page=0&size=10&sort=salary,desc
+LIMIT 10 OFFSET 0
+
+
+In cursor pagination, the client sends the cursor parameter to retrieve the next page. However, the cursor itself is generated by the server in the previous response. The client simply returns that cursor value in the next request. This ensures data consistency and prevents manipulation
+
+{
+ "data":[
+   {"id":6,"name":"Mark"},
+   {"id":7,"name":"Lisa"},
+   {"id":8,"name":"Ravi"}
+ ],
+ "nextCursor":8
+}
+==============================================================================================================================
+What is Spring Batch
+
+Job LAuncher -> Job ->Step -> ItemReader
+Job Repository		      ItemProcess	
+			      ItemWriter	
+
+============================================================================================================================
+
+Junit 5
+
+@ExtendWith(MockitoExtension.class)
+class UserServiceTest {
+
+    @Mock
+    private UserRepository repository;
+
+    @InjectMocks
+    private UserService service;
+
+    @Test
+    void testGetUserById() {
+        User user = new User(1L, "Alice");
+        when(repository.findById(1L)).thenReturn(Optional.of(user));
+
+        User result = service.getUserById(1L);
+
+        assertEquals("Alice", result.getName());
+        verify(repository, times(1)).findById(1L);
+    }
+
+    @Test
+    void testUserNotFound() {
+        when(repository.findById(2L)).thenReturn(Optional.empty());
+
+        assertThrows(RuntimeException.class, () -> service.getUserById(2L));
+    }
+}
+
+ Add JaCoCo Plugin (Maven)
+
+mvn clean verify
+
+target/site/jacoco/index.html
+
+
+Garbage collector
+User user = new User(); // Allocated in Eden (Young Gen)
+If user is still reachable after a few GC cycles, it moves to Survivor spaces, then eventually to Old Gen.
+
+If it’s no longer referenced early, it gets collected in Minor GC.
+
+===================================================================================================================
+
+AWS S3 bucket
+
+goto IAM console, create user with admin role, or having access to S3 service(save secret key)
+
+Create bucket name(name should not have _ and should be unique name not available globally just like gmailid), you can block public access
+
+S3 bucket is used as storage, to store the files and maintain the versioning of file(if you have enable the versioning)
+
+From SpringBoot you can create, delete bucket, and u can upload file and delete the file
+
+<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk-s3</artifactId>
+			<version>1.12.310</version>
+		</dependency>
+
+Steps
+1) application.properties file 
+
+accessKey=dummy_access_key
+secretKey=dummy_secret_key
+region=ap-south-1
+cloud.aws.region.static=ap-south-1
+
+2)Create AWSCOnfiguration file, Whch return s3client
+
+@Configuration
+public class AWSS3Config {
+
+	@Value("${accessKey}")
+	private String accessKey;
+
+	@Value("${secretKey}")
+	private String secretKey;
+
+	@Value("${region}")
+	private String region;
+
+	public AWSCredentials credentials() {
+		AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
+		return credentials;
+	}
+
+	@Bean
+	public AmazonS3 amazonS3() {
+
+		AmazonS3 s3client = AmazonS3ClientBuilder.standard()
+				.withCredentials(new AWSStaticCredentialsProvider(credentials())).withRegion(region).build();
+		return s3client;
+	}
+}
+3)Controller
+
+@GetMapping("/add/{bucketName}")
+	public ResponseEntity<String> createBucket(@PathVariable String bucketName) {
+		return new ResponseEntity<>(service.createBucket(bucketName), HttpStatus.OK); =>amazonS3.createBucket(bucketName);
+	}
+
+@DeleteMapping(path="/delete/file/{bucketName}/{fileName}")
+	public ResponseEntity<String> deleteFile(@PathVariable String bucketName,@PathVariable String fileName)
+	{
+		return new ResponseEntity<>(service.deleteFile(bucketName,fileName),HttpStatus.OK); => amazonS3.deleteObject(bucketName, fileName);
+	}
+
+	@DeleteMapping("/delete/bucket/{bucketName}")
+	public ResponseEntity<String> deleteBucket(@PathVariable String bucketName) {
+		return new ResponseEntity<>(service.deleteBucket(bucketName), HttpStatus.OK); =>amazonS3.deleteBucket(bucketName);
+	}
+
+
+
+
+@PostMapping(path = "/upload/file/{bucketName}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> uploadFile(@RequestParam MultipartFile file,
+			@PathVariable String bucketName) {
+		return new ResponseEntity<>(service.uploadFile(file,bucketName), HttpStatus.OK);=>amazonS3.putObject(bucketName, convFile.getName(), convFile);
+	}
+
+public void uploadFiletoBucket(MultipartFile multiPart,String bucketName) throws Exception {
+		logger.info("Inside method upload");
+		File convFile = new File(System.getProperty("java.io.tmpdir") + "/" + multiPart.getOriginalFilename());
+		multiPart.transferTo(convFile);
+		try {
+			amazonS3.putObject(bucketName, convFile.getName(), convFile);
+			
+		} catch (AmazonS3Exception s3Exception) {
+			logger.error("Unable to upload file :" + s3Exception.getMessage());
+		}
+	}
+
+
+What iS SQS(Simple Queue Service) implements puplish and consumer pattern
+When to use: one microservices send the message to other microservice, but if other microservice is down all publish message will be discard
+Solution : Introduce the queue , all message will be stored in queue
+
+Create user with permission AmazonSQSFullAccess
+Create Queue name-my-first-queue
+
+add below dependency in pom.xml
+<dependency>
+			<groupId>io.awspring.cloud</groupId>
+			<artifactId>spring-cloud-aws-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.awspring.cloud</groupId>
+			<artifactId>spring-cloud-aws-starter-sqs</artifactId>
+		</dependency>
+
+add key value in application.properties
+
+accessKey=access_key
+secretKey=secrert_key
+sqs.url=your_queue_url
+region=ap-south-1
+cloud.aws.region.static=ap-south-1
+
+
+Create Configuration file
+@Configuration
+public class AWSSQSConfig {
+
+	@Value("${accessKey}")
+	private String accessKey;
+
+	@Value("${secretKey}")
+	private String secretKey;
+
+	@Value("${region}")
+	private String region;
+
+	 @Bean
+	  SqsAsyncClient sqsAsyncClient(){
+	    return SqsAsyncClient
+	      .builder()
+	      .region(Region.of(region))
+	      .credentialsProvider(StaticCredentialsProvider
+	        .create(AwsBasicCredentials.create(accessKey, secretKey)))
+	      .build();
+	   // add more Options
+	  }
+
+	  @Bean
+	  @Qualifier("publish")
+	  @Primary
+	  public SqsTemplate sqsTemplate(SqsAsyncClient sqsAsyncClient){
+	      return SqsTemplate.builder().sqsAsyncClient(sqsAsyncClient).build();
+	  }
+}
+
+
+Create Consumer -> read the message as soon as message is publish
+
+@Service
+public class Consumer {
+
+	@SqsListener(value="my-first-queue")
+	public void myConsumer(String message)
+	{
+		System.out.println("Message received:"+message);
+	}
+}
+
+
+Create Publisher
+@RestController("")
+public class Publish {
+
+	@Autowired
+	@Qualifier("publish")
+	private SqsTemplate sqs;
+
+	@Value("${sqs.url}")
+	private String sqsUrl;
+
+	@PostMapping("/publish/{msg}")
+	public ResponseEntity<String> postMessage(@PathVariable("msg") String message) {
+		sqs.send(sqsUrl, message);
+		return new ResponseEntity<>("Message Published", HttpStatus.OK);
+	}
+
+}
+
+====================================================================================================
+SNS => Simple Notification service , if you want to email content
+=======================================================================
+Cloud Watch is used to view the logs, running on local machine or EC2 instance
+
+A Docker image for a Spring Boot application is a packaged, self-contained unit that includes:
+
+Your Spring Boot application (usually as a JAR file)
+
+A base operating system (like Alpine or Debian)
+
+A Java Runtime Environment (JRE or JDK)
+
+Instructions on how to run the application
+
+Build : docker build -t my-springboot-app
+Run   :docker run -p 8080:8080 my-springboot-app
+
+
+
+What is EC2: it provide operating system like(ubantu, and we can select size micro, large based on requirment), then we need to install the software for eg:tomcal, databse driver so that our application can run on it.
+
+once the tomcat is installed , we can place war file in tomcat/lib/web folder and start the tomcat 
+Deployment in EC2
+
+Install Docker in EC2, and Gitlab runner
+
+Local Spring boot application
+Build
+create docker file (build artifacts using maven image and jdk)
+
+Create Docker repository
+
+create gitlab-cml
+
+
+
+
+
+Deployment Flow in EKS
+
+Build : mvn clean install
+Create Dockerfile
+Create Docker Image
+Create Docker Repository
+Build and Push Docker Image to AWS ECR
+Create EKS Cluster 
+Create Kubernetes Deployment YAML -How many pod need to configure for eg:3
+Create a Kubernetes Service
+Deploy to EKS
+
+=============================================================================================
+
+EKS (Elastic Kubernetes Service) is a fully managed Kubernetes service that makes it easy to deploy, manage, and scale containerized applications using Kubernetes on AWS.
+
+====================================================================
+
+Package the app as a .jar file
+
+Launch an EC2 instance (Linux)
+
+SSH into the instance and install Java
+
+Transfer the .jar using scp or S3
+
+Run the app with java -jar app.jar
+
+Open the required port (e.g., 8080) in the EC2 security group
+================================================
+Full REST API Exception Flow in Spring Boot
+When an exception is thrown in a REST API, here’s what happens step-by-step:
+
+✅ Step 1: Client Calls Your REST API
+http
+GET /api/users/999
+✅ Step 2: Controller Delegates to Service/DAO
+java
+Copy
+Edit
+@GetMapping("/{id}")
+public ResponseEntity<User> getUser(@PathVariable Long id) {
+    return ResponseEntity.ok(userService.findById(id));
+}
+Let’s say findById(id) throws an exception like UserNotFoundException.
+
+✅ Step 3: Exception is Thrown
+java
+public User findById(Long id) {
+    return userRepository.findById(id)
+            .orElseThrow(() -> new UserNotFoundException("User not found"));
+}
+✅ Step 4: DispatcherServlet Catches the Exception
+Spring's DispatcherServlet intercepts all incoming HTTP requests.
+
+If a controller method throws an exception, it delegates to a chain of HandlerExceptionResolvers.
+
+✅ Step 5: ExceptionHandlerExceptionResolver Kicks In
+This is where Spring searches for:
+
+A method annotated with @ExceptionHandler in the same controller.
+
+If not found, it checks all @ControllerAdvice beans.
+
+It picks the most specific handler method matching the exception class.
+
+=====================================================================================
+
+POST and PUT Difference
+
+Idempotent
+
+POST / PUT / PATCH
+
+
+================================================================================
+
+Questions	 
+Question: What do you think is the reason for String Class to be Immutable?	 
+ 	 
+1. Difference between these two types of object creation.
+a. String s = "xyz";
+b. String s = new String("xyz");	 
+ 
+ 
+ 	 
+Can we override static method ?	No, static method cannot be overridden.
+ 	 
+Why we cannot override static method ?	
+Because static method is bound with class where as instance method is bound with object. 
+Static belongs to class area and instance belongs to heap area.
+ 	 
+Difference between static and final keyword	Static keyword always fixed the memory that means that will be located only once in the program where as final keyword always fixed the value that means it makes variable values constant.
+ 	 
+2. Which access specifier is known as package access specifier.	 
+ 	 
+3. Internal working of hashmap
+
+HashMap internally uses an array of buckets. When we put a key-value pair, it calculates the hashCode of the key and determines the index using a hash function. If multiple keys map to the same index, collisions are handled using a linked list or a balanced tree in Java 8+. During retrieval, it uses hashCode and equals to find the correct entry. When the load factor exceeds 0.75, the map resizes and rehashes entries.
+
+ut(key, value)
+
+1. hashCode()
+2. index = hash % size
+3. check bucket
+4. handle collision
+5. store node
+6. resize if needed
+
+threshold = capacity × loadFactor
+          = 16 × 0.75 = 12
+
+	 
+ 	 
+If we don't override hashcode() while using a object in hashing collection, what will be the impact ?	
+Then the Object's default hashcode() method will be used to calculate the hashcode, which in turn will return the memory address of the object in hexadecimal format. So in a way the hashmap will behave like a identity hashmap which will consider two elements equal if and only if two objects are same as per their memory address (and not logically). For example two String Objects with same contents might be treated different by this hashmap if they are different on heap.
+Can we keep the code twice and what exception we will get Hashmap.put(nullkey, "")	 
+4. Write a method to find second highest number from a list of integers without using Collections.sort(). 
+If the above one is done then ask to make the method generic to find second highest Date from List of Date objects.
+
+
+How to inject multiple properties
+
+src/main/resources/custom.properties
+
+app.title=My Custom App
+app.version=2.0
+Java Config
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+
+@Configuration
+@PropertySource("classpath:custom.properties")
+public class CustomConfig {
+}	 
+ 
+ 	 
+5. When to use the Strategy Design Pattern in Java?
+Strategy Design Pattern is used to choose one behavior (algorithm) from multiple options at runtime.
+
+Example: Choosing between UPI or Card payment while making a payment. 
+ 	 
+6. There is an Employee class with fields like empId, empName, salary. We have a List of Employee objects. We have to fetch all the empIds and store into a List. How can we do this in java8	 
+ 	 
+List<Integer> empIds = employees.stream()
+        .map(Employee::getEmpId)
+        .collect(Collectors.toList());
+
+
+7. Difference between map() and flatMap() methods in java8
+
+List<String> names = List.of("A", "B");
+
+names.stream()
+     .map(s -> s.toLowerCase());
+
+
+List<List<String>> list = List.of(
+    List.of("A", "B"),
+    List.of("C", "D")
+);
+
+list.stream()
+    .flatMap(l -> l.stream())
+    .collect(Collectors.toList());
+
+
+	 
+How to iterate and remove elements from collection
+for (Integer num : list) {
+    if (num % 2 == 0) {
+        list.remove(num); // ❌ Exception
+    }
+}
+
+👉 Throws: ConcurrentModificationException
+
+
+“To safely remove elements while iterating, I use an Iterator’s remove() method or Java 8 removeIf() to avoid ConcurrentModificationException.”
+
+Iterator<Integer> it = list.iterator();
+
+while (it.hasNext()) {
+    Integer num = it.next();
+    if (num % 2 == 0) {
+        it.remove(); // ✅ safe
+    }
+}
+
+Fail-fast → throws exception if collection is modified during iteration
+Fail-safe → allows modification by working on a copy(concurrentHashmap, and copyOnWriteArrayList)
+
+Failfast vs Failsafe iterators	Arraylist and HashMap - Fail fast
+CopyOnWriteArraylist and ConcurrentHashMap - Fail-safe
+
+
+=========================================
+
+	 
+Volatile and transient keywords	 
+volatile → ensures visibility of variable across threads
+transient → prevents variable from being serialized
+
+=================================================
+
+What is Threadlocal	
+variable local to thread, no other thread use it.
+
+=================================================
+
+ 
+Can we keep the code twice and what exception we will get Hashmap.put(nullkey, "")	
+it will get override
+Shallow vs Deep copy	Shallow : 
+We have original object and clone of that object. 
+when we will modify clone obj it will lead to change in original obj as well.
+So Orginal and clone obj linked to same reference.
+Deep :    
+We have original object and clone of that object. when we will modify clone obj it will not lead to change in original obj. 
+both original obj and clone are independent of each other.
+Different ways of creating an object	
+1. new
+2. newInstance()
+3.clone()
+
+
+What is Kibana?
+
+
+@JsonBackReference: Used on the students field in the Course entity to prevent infinite recursion during serialization.
+Bidirectional Relationship: The Student entity references Course, and Course references Student. Without @JsonBackReference, Jackson would serialize both sides endlessly.
+
+
+Difference between PUT and PAtch
+
+PUT -> when we want to update all attribute of customer, if resource not available create then update
+
+Patch-> if we want to update only few attribute for eg name and email, then we go for Patch(why do we update all attribute)
+
+Scenario 1: Using save() Method
+If you use the save() method of the JPA repository with the PUT method, the entire entity will be replaced. Fields not included in the request (e.g., email, id, etc.) will be set to null or their default values unless they are explicitly fetched and preserved before saving.
+
+
+========GITlab questions ======================
+
+What is  git pull?
+git pull origin main
+
+= git fetch origin main + git merge origin/main
+
+Automatically merges the changes.
+
+May lead to unexpected merges or conflicts if you're not ready.
+
+More convenient for fast syncing.
+
+What is git fetch + git merge?
+git fetch + git merge
+Step-by-step.
+
+Gives you a chance to review changes before merging.
+
+Imagine origin/main has a new commit C1:
+
+local/main: A---B
+origin/main: A---B---C1
+git pull:
+git pull origin main
+Your local main now includes C1 via an auto-merge.
+
+git fetch:=> means
+git fetch origin
+No change to your local main.
+
+But now your origin/main has C1.
+git merge origin/main
+
+
+git init
+Use git pull origin main    --allow-unrelated-histories first
+git remote add origin https://github.com/your-username/your-repo-name.git
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git push -u origin main
+
+
+======================================================================
+
+volatile in Java
+What it does
+
+volatile guarantees visibility, not atomicity.
+
+If Thread A updates a volatile variable
+
+Thread B will immediately see the updated value
+
+It prevents threads from reading stale values from CPU cache.
+
+What it does NOT do
+
+❌ Does not make compound operations thread-safe
+❌ Does not prevent race conditions
+
+Example
+volatile boolean flag = false;
+
+Thread A: flag = true;
+Thread B: if (flag) { ... }  // guaranteed to see true
+
+But this is NOT safe:
+volatile int count = 0;
+
+count++; // NOT atomic
+
+
+Why?
+Because count++ = read → increment → write (3 steps)
+
+2️⃣ Atomic classes (java.util.concurrent.atomic)
+
+Examples:
+
+AtomicInteger
+
+AtomicLong
+
+AtomicBoolean
+
+AtomicReference
+
+What they do
+
+✔ Guarantee atomicity
+✔ Guarantee visibility
+✔ Use lock-free CAS (Compare-And-Swap) under the hood
+
+Example
+AtomicInteger count = new AtomicInteger(0);
+
+count.incrementAndGet(); // thread-safe
+
+
+No race condition. No synchronization needed.
+
+=====================================================================
+
+ThreadLocal provides thread-confined variables where each thread maintains its own copy, avoiding synchronization and ensuring data isolation, 
+commonly used for request context, logging, and security information.
+
+RequestContext using ThreadLocal allows per-request data to be stored and accessed across layers without passing parameters, while ensuring thread safety in synchronous request processing.
+
+=====================================================================
+Lock
+
+Lock is a mechanism that allows only one thread at a time to access a shared resource.
+Lock lock = new ReentrantLock();
+
+lock.lock();
+try {
+    // critical section
+} finally {
+    lock.unlock(); // MUST be called
+}
+
+tryLock
+
+tryLock attempts to acquire a lock immediately and returns true if successful, otherwise false without waiting.: nonblocking operation , it is optional task
+
+Lock lock = new ReentrantLock();
+
+lock.lock();
+try {
+    // critical section
+} finally {
+    lock.unlock(); // MUST be called
+}
+
+lock() → You stand in one line and wait
+
+tryLock() → If line is long, you switch counters or shop more
+
+ConcurrentHashMap never forces you to stand and wait.
+
+One-sentence summary 🎯
+
+ConcurrentHashMap uses tryLock so threads don’t wait; if a part of the map is busy, they retry, help, or move on, keeping performance high.
+================================================================================================================
+CountDownLatch lets one or more threads wait until a fixed number of tasks are completed.
+Pre-requistee
+Launching a rocket 🚀
+
+Fuel check
+
+Navigation check
+
+Weather check
+
+Worker 1: work → done
+Worker 2: work → done
+Worker 3: work → done
+
+Main Thread: waits → then continues
+📌 Workers don’t care about each other.
+
+With CyclicBarrier
+Worker 1: work → wait
+Worker 2: work → wait
+Worker 3: work → wait
+
+All workers continue together
+
+==========================================
+Phaser is like a team checkpoint where threads wait for each other at multiple stages, and threads can join or leave anytime.
+
+Even simpler:
+
+Latch → wait once
+
+Barrier → wait together, same size group
+
+Phaser → wait together, multiple stages, flexible group
+
+====================================================================================
+
+A Semaphore is like a traffic light for resources: it only allows a certain number of threads to use a resource at the same time. Others must wait.
+
+Example: Slow IO service
+
+Imagine you have a file server or slow API.
+
+Only 3 threads can call it at the same time (because it’s slow).
+
+Any extra threads must wait until a spot is free.
+===================================================
+HashMap uses an array of buckets, computes a hash to choose a bucket, stores key-value pairs in linked lists or trees in case of collisions, and resizes when load factor threshold is crossed.
+
+Defalt capacity :16
+=======================================
+concurrenthashmap
+
+Map divided into segments/buckets
+
+Each bucket has its own lock
+
+Threads:
+
+Can read without locking
+
+Can write using a lock only for that bucket
+
+Large number of threads can operate without waiting on the whole map
+no ConcurrentModificationException occur
+
+==================================================================
+ConcurrentHashMap, CopyOnWriteArrayList → safe for concurrent modification
+Java collections have an internal modCount (modification count)
+
+Iterator keeps expectedModCount = modCount at creation
+
+If collection is modified (add/remove) during iteration → modCount ≠ expectedModCount
+
+Iterator throws ConcurrentModificationException
+
+
+| Approach               | Iterator Used | Fail Type | Exception |
+| ---------------------- | ------------- | --------- | --------- |
+| for-each loop          | ✔ Yes         | Fail-Fast | ❌ Yes     |
+| Iterator               | ✔ Yes         | Fail-Fast | ❌ Yes     |
+| Normal for loop        | ❌ No          | N/A       | ✔ No      |
+| Concurrent collections | ✔ Yes         | Fail-Safe | ✔ No      |
+
+
+
+
+
+3️⃣ Example 1: ArrayList
+List<String> list = new ArrayList<>();
+list.add("A");
+list.add("B");
+list.add("C");
+
+for (String s : list) {
+    if (s.equals("B")) {
+        list.remove(s); // ❌ causes ConcurrentModificationException
+    }
+}
+
+=========================================
+
+Memory Management
+
+Stack Memory -> Method block execute, once method compelted it is removed from memory, infinite loop condition we get stack overflow.
+Heap MEMORY  -> Object resides in it, for eg: too much connection object is there, because of bad practice sql it leads out of memory.
+
+Thread dump and Heap dump use to anaysis,
+
+if you using batch job how do you decide memory allocation?
+
+
+1️⃣ Step 1: Request comes to your Java app
+
+A client hits an API:
+
+GET /reports/monthly
+
+
+Spring Boot receives it and assigns a request thread:
+
+http-nio-8080-exec-5
+
+2️⃣ Step 2: Java code asks for a DB connection
+@Transactional
+public List<Report> generateReport() {
+    return reportRepository.findAll(); // heavy query
+}
+
+
+What happens internally:
+
+@Transactional starts a transaction
+
+HikariCP gives one connection from the pool
+
+That connection is now locked to this thread
+
+👉 Important:
+As long as the method is running, the connection is NOT returned to the pool.
+
+3️⃣ Step 3: Long-running query starts
+SELECT * FROM reports;
+
+
+Why it’s slow:
+
+Huge table
+
+No pagination
+
+No index
+
+Returns millions of rows
+
+Java thread is now:
+
+Waiting for DB to finish
+
+Holding the connection
+
+Thread state in dump:
+
+RUNNABLE (waiting on socket read)
+
+4️⃣ Step 4: Multiple requests do the same thing
+
+Now imagine 10 users hit the same API.
+
+Each one:
+
+Takes 1 DB connection
+
+Holds it for minutes
+
+Pool size = 10
+
+Result:
+
+10 active connections
+0 free connections
+
+
+🔥 Pool is now exhausted
+
+5️⃣ Step 5: New request arrives → BLOCKED
+
+A new request comes:
+
+userRepository.findById(1L);
+
+
+But:
+
+No connection available
+
+Thread waits
+
+Thread dump:
+
+BLOCKED at HikariPool.getConnection()
+
+
+Now:
+
+Requests queue up
+
+Threads pile up
+
+Heap memory grows
+
+6️⃣ Step 6: Health check fails ❌
+
+Health check does:
+
+SELECT 1;
+
+
+Still needs a connection.
+
+But pool is empty → timeout.
+
+System behavior:
+
+Load balancer marks service unhealthy
+
+Kubernetes restarts pod
+
+Users see downtime
+
+7️⃣ Why Java is the real problem (not DB)
+
+DB might be:
+
+Slow but alive
+
+Java problem:
+
+Holding connections too long
+
+Poor query design
+
+Transaction scope too big
+
+✅ HOW TO RESOLVE THIS (properly)
+
+Now the important part 👇
+
+✅ Solution 1: Reduce transaction scope (MOST IMPORTANT)
+❌ Bad
+@Transactional
+public void process() {
+    List<Order> orders = repo.findAll();
+    orders.forEach(this::heavyLogic); // holds connection
+}
+
+✅ Good
+public void process() {
+    List<Order> orders = fetchOrders(); // short transaction
+    orders.forEach(this::heavyLogic);
+}
+
+@Transactional(readOnly = true)
+public List<Order> fetchOrders() {
+    return repo.findAll();
+}
+
+
+✔ Connection is released early
+
+✅ Solution 2: Pagination / streaming
+❌ Bad
+repo.findAll();
+
+✅ Good
+PageRequest page = PageRequest.of(0, 1000);
+Page<Order> orders;
+
+do {
+    orders = repo.findAll(page);
+    process(orders.getContent());
+    page = page.next();
+} while (orders.hasNext());
+
+
+✔ Short DB usage
+✔ Less memory
+✔ Faster recovery
+
+✅ Solution 3: Query optimization (DB + Java)
+
+Add indexes
+
+Avoid SELECT *
+
+Avoid functions in WHERE
+
+Use projections
+
+@Query("select o.id, o.status from Order o")
+List<Object[]> fetchLightweight();
+
+✅ Solution 4: Time limits (safety net)
+spring:
+  datasource:
+    hikari:
+      connection-timeout: 30000
+      max-lifetime: 600000
+      leak-detection-threshold: 2000
+
+
+If a connection is held too long → logs warn you.
+
+✅ Solution 5: Async / batch processing
+
+Don’t do heavy reports in request thread.
+
+@Async
+public void generateReportAsync() {
+   // batch job
+}
+
+
+Or:
+
+Spring Batch
+
+Scheduled job
+
+Message queue (Kafka / SQS)
+
+8️⃣ Interview-ready explanation (say this)
+
+“A long query holds a DB connection for its entire execution. With limited pool size, concurrent long queries exhaust the pool, blocking all other requests. The fix is to shorten transaction scope, paginate data, optimize queries, and move heavy work off request threads.”
+
+9️⃣ One-line production lesson 🔥
+
+“It’s not how many connections you have — it’s how long you hold them.”
+thread is BLOCKED when:
+
+It tries to enter a synchronized block or method
+
+But another thread already owns the lock
+
+It is waiting for that lock to be released.
+
+--------------------------------------------------------------------------------------------------------
+Spring AI
+https://www.youtube.com/watch?v=oP7tn_YfoOk&list=PLuNxlOYbv61hmSWcdM0rtoWT0qEjZMIhU
+--------------------------------------------------------------------------------------------------------
+
+Sealed class = Controlling inheritance, Parent decide who will be the child
+
+Why
+
+Absolutely! Here’s a simple, self-contained Java 17 example that shows a sealed parent type with three different child kinds:
+a final child (cannot be subclassed further),
+a sealed child (can be subclassed, but only by permitted types),
+a non-sealed child (opens inheritance again—anyone can extend it).
+ 
+1) Result algebra
+public sealed interface GetUserResult permits Found, NotFound { }
+
+public record Found(UserDto dto) implements GetUserResult {}
+public record NotFound(String id) implements GetUserResult {}
+ 
+// 2) Service
+public GetUserResult get(String id) {
+    return repo.findById(id).map(u -> new Found(UserDto.from(u)))
+               .orElseGet(() -> new NotFound(id));
+}
+ 
+// 3) Controller
+@GetMapping("/users/{id}")
+public ResponseEntity<?> get(@PathVariable String id) {
+    GetUserResult r = service.get(id);
+    if (r instanceof Found f)     return ResponseEntity.ok(f.dto());
+    if (r instanceof NotFound nf) return ResponseEntity.status(404).body(Map.of("id", nf.id()));
+    throw new IllegalStateException("Unhandled: " + r.getClass());
+}
+ 
+========================================================================================
+
+Virtual Threads
+
+What are Virtual Threads (simple explanation)
+Virtual threads are very lightweight threads in Java (since Java 21).
+They let you run thousands or even millions of tasks at the same time without slowing down the system.
+Think of them like:
+
+Platform threads = expensive hotel rooms (limited, costly)
+Virtual threads = cheap beds in a dorm (many available, low cost)
+
+=============================================================================================
+
+Linear Search → Finding a name by reading every page in a notebook.
+
+Binary Search → Finding a word in a dictionary by opening the middle page first.
+============================================================================
+
+how CICD works
+
+jenkins pipeline
+
+step1 : checkout the project using git url
+step2 : mvn clean package
+step3 : read the docker file which contain
+	java runtime + spring boot jar + stratup command
+	
+FROM registry.mywizard-saas-devops-mt.accenture.com/dummyafsdoed-5628/afs_users/afs_cod_authentication/new-openjdk17:1.17
+# Set the working directory in the container
+WORKDIR /app
+# Copy the JAR file into the container at /app
+COPY target/*.jar app.jar
+# Expose the port your application runs on (optional)
+EXPOSE 8080
+# Run the JAR file
+ENTRYPOINT ["java", "-jar", "app.jar"]
+
+
+execute the command
+docker build -t lokasai/mywebapp
+
+step4 : push to docker hub
+step5  : deployment.yml used for kubernetes deployment
+	 pull image from docker container
+	 run the container on kubernetes
+
+ 	repelicas => specify the number of pods need to run.
+
+==============================================================================
+
+What is Docker?
+Docker is a patform that lets you package an application and all its dependencies into container.
+it is OS level virtualization
+
+for eg: if we want to run java jar file we need jre, java run command 
+
+FROM  new-openjdk17:1.17
+# Set the working directory in the container
+WORKDIR /app
+# Copy the JAR file into the container at /app
+COPY target/*.jar a pp.jar
+# Expose the port your application runs on (optional)
+EXPOSE 8080
+# Run the JAR file
+ENTRYPOINT ["java", "-jar", "app.jar"]
+
+============================================================================
+
+What is Kubernetes?
+open source container Orchestration
+used to deploy any container
+ensure high availability,Auto scaling and auto healing
+
+Container image: package of application, static file, non executable file.
+
+==================================================================================
+=======================================================================
+how will you choose pool size in advanced multi threading.
+I first identify whether workload is CPU-bound or IO-bound.
+For CPU-bound tasks I keep pool size near CPU cores.
+For IO-bound tasks I calculate using wait/compute ratio and align pool size with downstream resources like DB connection pools to avoid thread starvation.
+Then I validate using monitoring and load testing.
+
+DB/API wait = 200 ms
+CPU processing = 50 ms
+
+Calculation:
+Core size is 8
+Pool Size = 8 × (1 + 200/50)
+           = 8 × (1 + 4)
+           = 40 threads
+
+core size is 4
+
+Thread DB connection pool size : Thread pool ≈ 20–25 max
+
+
+
+=====================================================
+
+In microservices, API versioning is handled at the API Gateway. 
+The gateway routes /v1 and /v2 requests to different service versions, allowing backward compatibility, gradual migration, canary releases, 
+and safe decommissioning without impacting clients.
+===================================================
+Our system follows a microservices architecture where AWS API Gateway acts as the entry point handling authentication, routing, 
+and rate limiting. The backend is built using Spring Boot REST APIs with layered architecture — controller, service, and repository.
+ We use Spring Data JPA for database interaction and Redis caching to improve performance and reduce database load. 
+The services are deployed on AWS and communicate via REST APIs, ensuring scalability and high availability.
+
+performance check:
+
+
+Client
+   |
+   v
+Order Service
+(Create Order: PENDING)
+   |
+   v
+Topic: order-created
+   |
+   v
+Payment Service
+(Process Payment)
+   |
+   |---- payment-success ---->
+   |                           Inventory Service
+   |                              |
+   |                              v
+   |                        inventory-reserved
+   |                              |
+   |                              v
+   |                        Shipping Service
+   |                              |
+   |                              v
+   |                        shipping-created
+   |                              |
+   |                              v
+   |                        Order Service
+   |                              |
+   |                              v
+   |                        Order COMPLETED
+   |
+   |---- payment-failed ---->
+                              Order Service
+                                   |
+                                   v
+                            Order CANCELLED
+
+
+==================================================================================================
+Circuit Breaker: Prevents cascading failures by stopping calls to a failing microservice and returning fallback responses.
+
+API Gateway: A single entry point that routes client requests to appropriate microservices and handles cross-cutting concerns like security, logging, and rate limiting.
+
+SAGA Pattern: Manages distributed transactions across microservices using a sequence of local transactions with compensating actions for rollback.
+
+=====================================================================================
+A Java concurrency framework component (java.util.concurrent) that manages a pool of threads to execute asynchronous tasks, 
+instead of creating threads manually.
+
+
+ExecutorService is a Java concurrency framework that manages a pool of threads and executes submitted tasks asynchronously, improving performance and resource utilization.
+✅ Advanced / Important Methods
+
+submit() → Executes task and returns Future to get result or status.
+
+invokeAll() → Executes multiple tasks and waits until all complete.
+
+invokeAny() → Executes multiple tasks and returns result of the first completed task.
+
+shutdown() → Stops accepting new tasks but completes existing ones.
+
+shutdownNow() → Attempts to stop all running tasks immediately.
+
+awaitTermination() → Waits for executor to finish after shutdown.
+
+schedule() (ScheduledExecutorService) → Runs task after a delay.
+
+scheduleAtFixedRate() → Runs task periodically at fixed intervals.
+
+scheduleWithFixedDelay() → Runs task repeatedly with delay between execu
+
+
+ExecutorService executor = Executors.newFixedThreadPool(3);
+
+executor.submit(() -> {
+    System.out.println("Task executed by " + Thread.currentThread().getName());
+});
+
+executor.shutdown();
+  ExecutorService executor = Executors.newFixedThreadPool(3);//blockingQueue
+					catchedThreadpool/
+					singleThreadpool
+					scheduledThreadPool
+
+NewFixedThreadPool(3)
+
+👉 Creates a thread pool with a fixed number of 3 threads and uses an unbounded blocking queue to hold extra tasks.
+
+Cached Thread Pool (newCachedThreadPool())
+
+👉 Creates a dynamically growing thread pool that reuses idle threads and creates new ones as needed (no queue, uses direct handoff).
+
+Single Thread Pool (newSingleThreadExecutor())
+
+👉 Creates a single-threaded executor that processes tasks sequentially in order using a queue.
+
+Scheduled Thread Pool (newScheduledThreadPool(n))
+
+👉 Creates a thread pool that can schedule tasks to run after a delay or periodically.
+
+Fixed → Limited threads + Queue
+Cached → Unlimited threads + No queue
+Single → One thread + Ordered execution
+Scheduled → Time-based execution
+
+======================================================
+
+
+Feature   	      synchronized	        ReentrantLock
+Deadlock Handling	❌ No control	✅ Can avoid using tryLock
+Timeout	                ❌ Not possible	✅ tryLock(timeout)
+Interruptible		❌ No	✅ lockInterruptibly()
+Lock release		Automatic	Manual (unlock())
+Flexibility		Low	High
+Risk of Deadlock	High	Lower (if used properly)
+
+
+
+=================================================================================
+How to hanndl heavy traffic
+
+Load Balancer: Distributes incoming requests across multiple servers to avoid overload.
+
+Auto Scaling: Dynamically adds/removes instances based on traffic.
+
+Microservices Architecture: Split ordering, payment, inventory, shipping into independent services.
+
+Caching (Redis/CDN): Reduce database load by serving frequently accessed data quickly.
+
+Message Queue (Kafka/RabbitMQ): Process orders asynchronously to handle spikes smoothly.
+
+Database Scaling: Use read replicas, sharding, and optimized indexing.
+
+Circuit Breaker & Retry: Prevent cascading failures during high load.
+
+API Gateway & Rate Limiting: Control and secure incoming traffic.
+===============================================================
+OAuth lets one application access another service on your behalf using permission tokens instead of passwords
+
+Keycloack is used for Authentication
+JWT is used for Authorization
+====================================================
+
+what is active directories and LDAP
+Active Directory is the directory service, and LDAP is the protocol used to communicate with it.
+ldap://ad.company.com
+Base DN: dc=company,dc=com
+Filter: (sAMAccountName=jdoe)
+=======================================================
+Pessimistic Locking
+
+Idea: Assume conflicts will happen.
+
+When one user accesses data, it locks it immediately.
+
+Other users must wait until lock is released.
+
+Example:
+
+SELECT * FROM seat WHERE id=10 FOR UPDATE;
+
+👉 Only one user can book the seat at a time.
+@Lock(LockModeType.PESSIMISTIC_WRITE)
+@Query("SELECT s FROM Seat s WHERE s.id = :id")
+Seat findSeatForUpdate(@Param("id") Long id);
+
+at Service layer
+
+use @transaction
+
+or Prevents others from updating while you are reading.
+
+@Lock(LockModeType.PESSIMISTIC_READ)
+Seat findById(Long id);
+
+🔹 Read API
+
+Multiple users call /seat/{id}
+
+No lock → fast performance
+
+Only checks availability.
+
+🔹 Book API
+
+Uses @Transactional
+
+Applies PESSIMISTIC_WRITE lock
+
+Only one user can book seat at a time.
+
+Others wait → prevents double booking.
+==================================================
+
+When a REST request arrives, DispatcherServlet routes it to the mapped controller method. The @RequestBody annotation triggers Jackson via HttpMessageConverter to deserialize JSON into a Java object. After processing, the returned object is serialized back into JSON and sent as the HTTP response automatically.
+
+===========================================================
+Apache Kafka is a message broker / event streaming platform used for communication between microservices.
+✔ Async communication
+✔ Loose coupling
+✔ High scalability
+✔ Fault tolerance
+
+Kafka messages should include a unique event ID, event type, timestamp, key for partitioning, and structured payload so consumers can process events reliably, maintain ordering, and avoid duplicate processing.
+
+===========================================================================
+1 MILLION RECORD PROCESSING — KEY POINTS
+🔹 1. Never Fetch All Records At Once
+
+Avoid findAll() or full table select
+
+Causes memory overflow
+
+Always process in chunks
+
+🔹 2. Use Pagination / Chunk Processing
+
+Fetch small batches (500–5000 records)
+
+Example:
+
+LIMIT 1000
+WHERE id > lastId
+
+Keeps memory stable
+
+🔹 3. Prefer Keyset Pagination (Better than OFFSET)
+
+OFFSET becomes slow for large tables
+
+Use indexed column:
+
+WHERE id > lastProcessedId
+🔹 4. Use Database Streaming
+
+Return Stream<T> from repository
+
+DB cursor fetches records gradually
+
+Prevents loading all data in memory
+
+🔹 5. Use DTO Instead of Entity
+
+Entities stored in Hibernate session cache
+
+DTO avoids persistence tracking
+
+Reduces memory usage
+
+🔹 6. Clear Hibernate Persistence Context
+
+Prevent first-level cache growth
+
+Example:
+
+entityManager.clear()
+
+Clear every 1000 records
+
+🔹 7. Process Asynchronously
+
+Do not process inside REST request
+
+Trigger background job
+
+Use Kafka / Queue / Scheduler
+
+🔹 8. Write Output Incrementally
+
+Stream data directly to:
+
+CSV file
+
+S3 storage
+
+Output stream
+
+Avoid building large List
+
+🔹 9. Optimize Database Query
+
+Fetch only required columns
+
+Add indexes
+
+Avoid joins if not required
+
+🔹 10. Configure Fetch Size
+hibernate.jdbc.fetch_size=1000
+
+DB sends rows in batches
+
+🔹 11. Use Read-Only Transactions
+@Transactional(readOnly = true)
+
+Avoid dirty checking overhead
+
+🔹 12. Parallel Processing Carefully
+
+Partition data ranges
+
+Multiple workers process different chunks
+
+Avoid DB locking conflicts
+
+🔹 13. Monitor System
+
+Memory usage
+
+DB connections
+
+Consumer lag (if Kafka used)
+
+🔹 14. Use Retry & Checkpointing
+
+Store last processed ID
+
+Resume processing after failure
+
+🔹 15. Prefer Export Job Pattern (Industry Standard)
+API → Trigger Job → Background Processing → File → Download Link
+🎯 Interview One-Line Summary
+
+Large record processing should be done using batch or streaming techniques with pagination, DTO projection, async background processing, and incremental writing to avoid memory and database overload.
+========================================
+✅ Optimistic Locking:
+
+Allows multiple transactions to access data and checks for conflicts only at update time using a version check, it main version
+@Entity
+public class Order {
+
+    @Id
+    private Long id;
+
+    private String status;
+
+    @Version
+    private Integer version;   // enables optimistic locking
+}
+
+✅ Pessimistic Locking:
+
+Locks the data immediately when accessed so other transactions cannot modify it until the lock is released.
+@Repository
+public interface OrderRepository extends JpaRepository<Order, Long> {
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    Optional<Order> findById(Long id);
+}
+
+==========================================================
+
+@Transactional(propagation = REQUIRES_NEW)
+saveAudit() =>secondary business logic, if its get failes thats fine order and payment should not be rollback.
+
+@Transactional(propagation = REQUIRED)
+createOrder()  ->primary business logic
+
+@Transactional(propagation = REQUIRED)
+processPayment() -> primary business logic
+
+Payment and Order are tightly connected.
+
+MAIN TX START
+ ├── Create Order
+ ├── Payment
+ │
+ ├── (Suspend MAIN TX)
+ │      Audit TX START
+ │      Audit COMMIT
+ │
+ ├── (Suspend MAIN TX)
+ │      Email TX START
+ │      Email COMMIT
+ │
+MAIN TX COMMIT
+
+
+===================================================================================
+Isolation controls data visibility between concurrent transactions.
+
+Isolation level → Rules about who can see updates while someone edits the book.
+
+Locking → Physically holding the book so others cannot change it.
+
+Feature			Isolation Level		Locking
+Controlled by		Database		Application/JPA
+Purpose	Control	 	visibility		Prevent modification
+READ_COMMITTED
+
+Good for normal APIs.
+
+REPEATABLE_READ
+
+Price/stock calculation must remain same during checkout.
+
+SERIALIZABLE
+
+Seat booking / money transfer where duplicates cannot happen.
+=============================================================================================
+ Suppose your team repository contains several long-lived branches, including main, release-v1.0, and release-v2.0. Which of the following Git commands best enables you to apply specific commits from main into release-v1.0 to apply hotfixes to the legacy version of the codebase?
+
+git cherry-pick
+
+=====================================================================
+
+
+Dtabase query
+
+select * from hr.EMPLOYEES;
+
+select max(salary) from hr.EMPLOYEES;
+
+select sum(salary) as total from hr.EMPLOYEES;
+
+select department_name,SUM(salary) as dept_total
+from HR.EMPLOYEES EMP
+JOIN
+HR.DEPARTMENTS DEPT
+ON EMP.DEPARTMENT_ID = DEPT.DEPARTMENT_ID
+Group by department_name;
+
+SELECT DEPARTMENT_ID, COUNT(*) AS total_employees
+FROM HR.EMPLOYEES
+GROUP BY DEPARTMENT_ID;
+
+select First_name,Last_name,DEPARTMENT_ID,
+SUM(salary) over(partition by DEPARTMENT_ID)  total_sal
+from HR.EMPLOYEES;
+
+--Rank Employees by Salary (Overall)
+
+select FIRST_NAME,LAST_NAME,Salary,RANK() over (order by salary desc) rank_salary
+from HR.Employees;
+
+--Rank Within Department
+
+select FIRST_NAME,LAST_NAME,Salary,emp.DEPARTMENT_ID,dept.department_name,
+RANK() over (PARTITION BY emp.DEPARTMENT_ID order by salary desc) rank_salary
+from HR.Employees emp
+JOIN HR.DEPARTMENTs dept
+on emp.DEPARTMENT_ID=dept.DEPARTMENT_ID
+ORDER BY dept.DEPARTMENT_NAME,rank_salary ASC;
+
+--2nd Highest Salary
+
+select first_name,last_name,salary,
+rank() over (order by salary desc) salary_rn
+from hr.employees; 
+
+
+
+select * from(
+select first_name,last_name,salary,
+rank() over (order by salary desc) salary_rn
+from hr.employees 
+)
+where salary_rn=2;
+
+
+--Top 1 Employee Per Department
+
+select * from(
+select first_name,last_name,salary,department_id,
+row_number() over (partition by department_id order by salary desc) salary_rn
+from hr.employees 
+)
+where salary_rn=1;
+
+Scenario	Use
+Need exactly 1 top employee per department	ROW_NUMBER() -> maintain unique records
+Need all employees sharing top salary	    RANK() -> can return  duplicate records
+Need ranking without skipping numbers	    DENSE_RANK()
+
+
+=========================================================================================
+
+Kafka Architecture
+
+KAFKA FAILURE SCENARIOS
+
+Kafka is designed to handle failures in distributed systems without losing data. Below are common Kafka failure scenarios.
+
+Broker Failure
+
+Scenario: A Kafka broker (server) crashes.
+
+Example cluster:
+Broker1
+Broker2
+Broker3
+
+Example partition replication:
+Partition-0 → Leader (Broker1), Replica (Broker2)
+Partition-1 → Leader (Broker2), Replica (Broker3)
+
+If Broker1 crashes:
+Partition-0 leader automatically switches to Broker2.
+
+Kafka uses replication and leader election to recover automatically. If replication is configured properly, there is no data loss.
+
+Producer Failure
+
+Scenario: Producer crashes while sending messages.
+
+Flow:
+Producer → Kafka Topic
+
+If producer fails:
+The message might not reach Kafka.
+
+Solution:
+Enable retries and acknowledgments.
+
+Example configuration:
+spring:
+  kafka:
+    producer:
+      acks: all
+      retries: 3
+      properties:
+        enable.idempotence: true
+        delivery.timeout.ms: 120000
+        request.timeout.ms: 30000 # wait for the broker response time
+
+120000 ms = 120 seconds = 2 minutes
+
+delivery timeout = total time for retries
+
+Producer sends message
+Broker not responding
+Producer retries
+Producer retries again
+Producer retries again
+
+
+retries=3
+acks=all
+
+Explanation:
+acks=all → Producer waits until all replicas confirm the message.
+retries=3 → Producer retries sending the message if it fails.
+
+
+If message is still not delivered after 2 minutes, Kafka throws an error.
+
+
+
+
+Consumer Failure
+
+Scenario: Consumer crashes while processing messages.
+
+Example:
+Topic partitions assigned to Consumer1 and Consumer2.
+
+If Consumer1 crashes:
+Kafka triggers a consumer rebalance.
+
+Result:
+Consumer2 takes the partitions of Consumer1 and continues processing.
+
+Message Processing Failure
+
+Scenario: Consumer reads the message but business logic fails.
+
+Example:
+Consumer reads message but database insert fails.
+
+Solutions:
+Retry mechanism
+Dead Letter Topic (DLT)
+
+Flow:
+order-topic → consumer fails → retry → retry → retry → if still failing → send to order-topic-dlt
+
+Dead Letter Topic stores failed messages for later analysis or reprocessing.
+
+Network Failure
+
+Scenario: Network disconnect between consumer and Kafka broker.
+
+Example:
+Consumer cannot communicate with broker.
+
+Kafka behavior:
+Consumer heartbeat stops.
+Kafka detects failure and removes the consumer.
+Kafka triggers consumer rebalance.
+
+Other consumers take over the partitions.
+
+Disk Failure
+
+Scenario: Kafka broker disk fails.
+
+Kafka uses replication.
+
+Example:
+Partition-0
+Leader → Broker1
+Replica → Broker2
+Replica → Broker3
+
+If Broker1 disk fails:
+Broker2 becomes the new leader.
+
+Messages remain available through replicas.
+
+Offset Commit Failure
+
+Scenario: Consumer processes message but offset is not committed.
+
+Example:
+Consumer processes message and crashes before committing offset.
+
+Result:
+When consumer restarts, it reads the same message again.
+
+This causes duplicate processing.
+
+Solution:
+Use idempotent processing or exactly-once processing.
+
+Kafka Cluster Failure
+
+Scenario: All brokers go down.
+
+Example:
+Broker1 down
+Broker2 down
+Broker3 down
+
+Result:
+Producers cannot send messages.
+Consumers cannot read messages.
+
+Solution:
+Use monitoring, multi-region clusters, and backup strategies.
+
+Real Production Failure Example
+
+Payment processing system:
+
+Payment Service → Kafka Topic → Payment Processor → Database
+
+Failure scenario:
+Database goes down.
+
+Handling approach:
+Retry processing.
+If retries fail, send message to Dead Letter Topic.
+Later reprocess failed messages.
+
+Best Practices for Kafka Failure Handling
+
+Use replication factor of at least 3.
+Enable producer retries.
+Use dead letter topics for failed messages.
+Monitor consumer lag.
+Implement idempotent consumers.
+Use retry topics for temporary failures.
+
+Interview Question
+
+What happens if a Kafka consumer fails?
+
+Answer:
+Kafka detects missing heartbeat from the consumer and triggers consumer rebalance. The partitions assigned to the failed consumer are reassigned to other consumers in the same consumer group so processing can continue.
+
+If you want, I can also convert the Kafka Consumer Group + Parallel Processing explanation into the same Notepad format, which is very useful for interview preparation notes.
+
+
+=====================================================
+To handle nullpointer exception
+
+Optional<String> name = Optional.ofNullable(null);
+
+System.out.println(name.orElse("Default Name"));
+===================================================
+
+SAGA Pattern
+
+STEP 1
+Client → Order Service
+         |
+         v
+Topic: order-created
+Event: OrderCreated
+
+STEP 2
+Payment Service consumes order-created
+         |
+         v
+Topic: payment-success OR payment-failed
+
+STEP 3
+Inventory Service consumes payment-success
+         |
+         v
+Topic: inventory-success OR inventory-failed
+
+STEP 4
+Order Service listens to final event
+         |
+         v
+Order Completed OR Order Cancelled
+
+
+
+on other side Orderservice is also reads below topic
+
+payment-success OR payment-failed
+inventory-success OR inventory-failed
+
+
+===========================================================
+
+
+
+API Request -> validation -> settelment --> response
+
+idempotency 
+latency
+security
+monitoring 
+
+=======================================================
+
+Client Request → JWT Filter → Parse Token → Verify Signature (Secret/Public Key) → Validate exp → Check Blacklist (Redis/DB) → Create Authentication → Continue Request
+ 
+
+1️⃣ Login
+Client → Auth Service
+        |
+        v
+JWT Token Generated
+        |
+        v
+Client stores token
+
+2️⃣ API Request
+Client → API Gateway / Service
+        |
+        v
+JWT Filter checks token
+        |
+        |---- Token in Redis blacklist → Reject (401)
+        |
+        |---- Token NOT in blacklist → Process request
+
+3️⃣ Logout
+Client → Logout API
+        |
+        v
+Token stored in Redis blacklist
+        |
+        v
+Token becomes invalid
+
+============================================================
+
+
+order - > offer -2days -50% discount
+	offer - 3 days - 30% discount
+
+system design
+
+optimistic class
+
+===================================================
+
+
+String s1="abcdefabcabcdef";
+
+
+for(int i=0;i<s1.length();i++){
+
+	for(int j=i+1;j<s1.length();j++){
+
+	String s2=s1.subString(i,j);	
+
+Hashmap<String,Integer> map=new Hashmap()
+
+map.put(s2,map.getOrDefault(s2,0)+1)	
+		
+
+
+}
+
+}
+
+
+====================================================================
+
+Kubernetes Architecture
+
+                +---------------------+
+                |   Control Plane     |
+                |---------------------|
+                | API Server          |
+                | Scheduler           |
+                | Controller Manager  |
+                | ETCD (Cluster DB)   |
+                +----------+----------+
+                           |
+                           |
+           ---------------------------------
+           |               |               |
+     +-----------+   +-----------+   +-----------+
+     | Worker    |   | Worker    |   | Worker    |
+     | Node 1    |   | Node 2    |   | Node 3    |
+     |-----------|   |-----------|   |-----------|
+     | kubelet   |   | kubelet   |   | kubelet   |
+     | kube-proxy|   | kube-proxy|   | kube-proxy|
+     | container |   | container |   | container |
+     | runtime   |   | runtime   |   | runtime   |
+     | Pods      |   | Pods      |   | Pods      |
+     +-----------+   +-----------+   +-----------+
+
+===========================================================================
+
+
+What is differnce between restTemplate,fiegn client and webclient and syntax
+
+
+1. RestTemplate (Blocking / Legacy)
+✅ Dependency
+<!-- Comes with spring-boot-starter-web -->
+✅ Bean
+@Bean
+public RestTemplate restTemplate() {
+    return new RestTemplate();
+}
+✅ GET Call
+String response = restTemplate.getForObject(
+    "http://localhost:8081/payment/{id}",
+    String.class,
+    id
+);
+✅ POST Call
+ResponseEntity<String> response = restTemplate.postForEntity(
+    "http://localhost:8081/payment",
+    requestBody,
+    String.class
+);
+🧠 Key Point
+
+✔ Blocking (thread waits)
+❌ Not recommended for new apps
+
+⚡ 2. WebClient (Non-Blocking / Reactive)
+✅ Dependency
+<!-- spring-boot-starter-webflux -->
+✅ Bean
+@Bean
+public WebClient webClient() {
+    return WebClient.builder().build();
+}
+✅ GET Call
+String response = webClient.get()
+    .uri("http://localhost:8081/payment/{id}", id)
+    .retrieve()
+    .bodyToMono(String.class)
+    .block(); // avoid block in real reactive apps
+✅ POST Call
+String response = webClient.post()
+    .uri("http://localhost:8081/payment")
+    .bodyValue(requestBody)
+    .retrieve()
+    .bodyToMono(String.class)
+    .block();
+🧠 Async Version (Best Practice)
+Mono<String> response = webClient.get()
+    .uri("http://localhost:8081/payment/{id}", id)
+    .retrieve()
+    .bodyToMono(String.class);
+🧠 Key Point
+
+✔ Non-blocking
+✔ High performance
+✔ Supports reactive streams
+
+
+
+
+🎯 3. Feign Client (Declarative)
+✅ Dependency
+<!-- spring-cloud-starter-openfeign -->
+✅ Enable Feign
+@EnableFeignClients
+@SpringBootApplication
+public class Application {}
+
+✅ Feign Interface
+
+@FeignClient(name = "payment-service", url = "http://localhost:8081")
+public interface PaymentClient {
+
+    @GetMapping("/payment/{id}")
+    String getPayment(@PathVariable("id") String id);
+
+    @PostMapping("/payment")
+    String createPayment(@RequestBody PaymentRequest request);
+}
+✅ Usage
+String response = paymentClient.getPayment(id);
+🧠 Key Point
+
+✔ Declarative (no boilerplate code)
+✔ Easy microservice integration
+❌ Blocking by default
+
+🔥 Final Comparison (Interview Table)
+Feature	RestTemplate	WebClient	Feign Client
+Type	Imperative	Reactive	Declarative
+Blocking	Yes	No	Yes
+Complexity	Medium	High	Low
+Performance	Low	High	Medium
+Recommended	❌ No	✅ Yes	✅ Yes
+
+
+Yes ✅ Feign works seamlessly with Eureka (via Spring Cloud).
+
+👉 How it works:
+
+You don’t use hardcoded URLs
+
+You call service using service name
+
+Eureka handles service discovery
+
+Ribbon / LoadBalancer handles load balancing
+
+✅ Example
+@FeignClient(name = "PAYMENT-SERVICE")
+public interface PaymentClient {
+
+    @GetMapping("/payment/{id}")
+    Payment getPayment(@PathVariable("id") Long id);
+}
+🔥 Behind the scenes:
+
+Feign calls → PAYMENT-SERVICE
+
+Eureka returns available instances
+
+Load balancer picks one instance
+
+Request is sent automatically
+
+👉 No manual coding required → super clean
+
+🔹 2. RestTemplate + Eureka (Manual Work)
+
+RestTemplate can work with Eureka, but not as easily.
+
+You need:
+
+@LoadBalanced annotation
+
+Use service name instead of URL
+
+✅ Example
+@Bean
+@LoadBalanced
+public RestTemplate restTemplate() {
+    return new RestTemplate();
+}
+String response = restTemplate.getForObject(
+    "http://PAYMENT-SERVICE/payment/1",
+    String.class
+);
+🔥 Behind the scenes:
+
+@LoadBalanced enables service discovery
+
+It intercepts the URL
+
+Talks to Eureka
+
+Resolves actual service instance
+
+👉 But still:
+
+You write more boilerplate
+
+No interface abstraction
+
+🔥 Key Difference (Interview One-Liner)
+
+👉 Feign = Declarative + Auto Eureka integration
+👉 RestTemplate = Imperative + Manual setup for Eureka
+
+🔥 Real Interview Insight (Very Important)
+Feature	Feign Client	RestTemplate
+Eureka Support		Built-in ✅	Needs @LoadBalanced ⚠️
+Code Style		Interface-based	Manual calls
+Boilerplate	Very Low	High
+Readability	Clean	Moderate
+Future	Recommended	Deprecated 🚫
+🔥 When to Use What
+✅ Use Feign when:
+
+Microservices + Eureka
+
+Clean architecture needed
+
+Less code
+
+✅ Use RestTemplate when:
+
+Legacy apps
+
+No Spring Cloud
+
+Simple internal calls
+
+⚡ Bonus (Advanced Interview Tip)
+
+👉 Feign internally uses:
+
+Spring Cloud LoadBalancer
+
+HTTP clients like OkHttp / Apache
+
+👉 RestTemplate:
+
+Blocking
+
+More Manual work
+@LoadBalancer need to use while creating RestTemplate
+
+restTemplate.getForObject("http://PAYMENT-SERVICE/payment", String.class);
+
+================================================================
+
+
+1. Where do we define Rate Limit & Threshold?
+
+
+Suppose order service is calling to payment service, to handle casecading scenario we need to define circuit breaker
+👉 In Resilience4j configuration (application.yml / properties)
+Used with:
+
+Circuit Breaker (threshold)
+
+Rate Limiter (rate limit)
+
+🔥 2. Circuit Breaker Threshold Configuration
+
+👉 This defines WHEN to open the circuit
+
+✅ Example (application.yml)
+resilience4j:
+  circuitbreaker:
+    instances:
+      paymentService:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+🔥 Meaning (VERY IMPORTANT)
+Property	Meaning
+slidingWindowSize: 10	            Last 10 requests are tracked by intervepter
+minimumNumberOfCalls: 5	              Start evaluation only after 5 calls
+failureRateThreshold: 50		      If 50% fail → OPEN circuit
+waitDurationInOpenState	               Stay OPEN for 10 sec
+permittedNumberOfCallsInHalfOpenState:3	Trial requests
+🔥 Example Scenario
+
+Out of 10 calls:
+
+6 failed ❌
+
+Failure rate = 60%
+
+👉 Threshold = 50%
+👉 Circuit → OPEN 🚫
+👉 All calls → Fallback
+
+🔹 3. Rate Limiter Configuration
+
+👉 Controls how many requests allowed per time
+
+✅ Example
+resilience4j:
+  ratelimiter:
+    instances:
+      paymentService:
+        limitForPeriod: 5
+        limitRefreshPeriod: 1s
+        timeoutDuration: 2s
+🔥 Meaning
+Property	Meaning
+limitForPeriod: 5	Max 5 requests
+limitRefreshPeriod: 1s	Per second
+timeoutDuration: 2s	Wait time if limit exceeded
+🔥 Example
+
+👉 10 requests hit at same time:
+
+First 5 → allowed ✅
+
+Next 5 → wait / fail ❌ (based on timeout)
+
+🔹 4. How to Attach to Feign / Service
+
+👉 Use annotation
+
+@CircuitBreaker(name = "paymentService", fallbackMethod = "fallback")
+@RateLimiter(name = "paymentService")
+public String callPayment() {
+    return paymentClient.getPayment(1L);
+}
+✅ Fallback Method
+public String fallback(Exception ex) {
+    return "Service unavailable. Try later.";
+}
+🔥 5. Combined Flow (Interview Gold)
+Client → Order Service
+        ↓
+   RateLimiter (limit traffic)
+        ↓
+   CircuitBreaker (check failures)
+        ↓
+   Feign Call → Payment Service
+        ❌ Failure
+        ↓
+   Fallback Response
+🔥 6. Real Production Insight
+
+👉 You typically configure:
+
+RateLimiter
+
+Protect downstream (avoid overload)
+
+CircuitBreaker
+
+Stop calling unhealthy service
+
+Retry
+
+Retry transient failures
+
+🔥 7. One-Liner (Interview Ready)
+
+👉 Threshold defines when to open the circuit based on failure rate, while rate limiter controls how many requests are allowed in a given time window.
+
+⚡ Pro Architect Tip (Very Important)
+
+👉 Choose values carefully:
+
+High traffic system:
+
+slidingWindowSize = 100
+
+failureRateThreshold = 40
+
+Critical service:
+
+Lower threshold → faster protection
+
+Rate limiter:
+
+Based on downstream capacity
+
+If you want 🚀
+I can give:
+
+Exact production config for Order → Payment → Inventory
+
+OR
+
+Comparison: Retry vs CircuitBreaker vs RateLimiter (very tricky interview question)
+
+Retry → “Try again if it fails”
+Circuit Breaker → “Stop trying if failures are too many”
+Rate Limiter → “Control how many requests are allowed”
+
+
+
+\\\\\\\\\\\\\\\\\\\\\
+
+
+
+
+
+To load different property file
+========================================
+in application.yml file and also enable profile to dev
+spring:
+  config:
+    import:
+      - classpath:common.yml
+      - classpath:db.yml
+
+=================================================
+
+
+@Configuration
+@PropertySource("classpath:custom.properties")
+public class CustomConfig {
+}
+
+in yml
+taskA:
+  name: DataProcessing
+  retryCount: 3
+  timeout: 5000
+
+
+
+@ConfigurationProperties(prefix="taskA")
+
+taskA.name        → config.getName()
+taskA.retryCount  → config.getRetryCount()
+taskA.timeout     → config.getTimeout()
+
+=============================================
+
+ExecutorService is part of java.util.concurrent and is used to manage and control threads using a thread pool.
+ExecutorService executor = Executors.newFixedThreadPool(5);
+executor.submit(() -> doWork());
+
+Better performance
+✔ Thread reuse
+✔ Controlled concurrency
+
+
+“@ConfigurationProperties is used to
+ bind a group of related properties into a strongly-typed Java class
+, making configuration cleaner and more maintainable.”
+
+
+
+
+=============================================================
+
+Use Case
+
+👉 Example:
+
+DB1 → User data
+DB2 → Order data
+✅ Step 1: Add Configuration in application.yml
+spring:
+  datasource:
+    db1:
+      url: jdbc:mysql://localhost:3306/userdb
+      username: root
+      password: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
+
+    db2:
+      url: jdbc:mysql://localhost:3306/orderdb
+      username: root
+      password: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
+✅ Step 2: Create DB1 Configuration
+@Configuration
+@EnableTransactionManagement
+@EnableJpaRepositories(
+        basePackages = "com.example.repo.db1",
+        entityManagerFactoryRef = "db1EntityManager",
+        transactionManagerRef = "db1TransactionManager"
+)
+public class DB1Config {
+
+    @Bean
+    @ConfigurationProperties(prefix = "spring.datasource.db1")
+    public DataSource db1DataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    @Bean
+    public LocalContainerEntityManagerFactoryBean db1EntityManager(
+            EntityManagerFactoryBuilder builder) {
+
+        return builder
+                .dataSource(db1DataSource())
+                .packages("com.example.entity.db1")
+                .persistenceUnit("db1")
+                .build();
+    }
+
+    @Bean
+    public PlatformTransactionManager db1TransactionManager(
+            EntityManagerFactory db1EntityManager) {
+
+        return new JpaTransactionManager(db1EntityManager);
+    }
+}
+✅ Step 3: Create DB2 Configuration
+@Configuration
+@EnableTransactionManagement
+@EnableJpaRepositories(
+        basePackages = "com.example.repo.db2",
+        entityManagerFactoryRef = "db2EntityManager",
+        transactionManagerRef = "db2TransactionManager"
+)
+public class DB2Config {
+
+    @Bean
+    @ConfigurationProperties(prefix = "spring.datasource.db2")
+    public DataSource db2DataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    @Bean
+    public LocalContainerEntityManagerFactoryBean db2EntityManager(
+            EntityManagerFactoryBuilder builder) {
+
+        return builder
+                .dataSource(db2DataSource())
+                .packages("com.example.entity.db2")
+                .persistenceUnit("db2")
+                .build();
+    }
+
+    @Bean
+    public PlatformTransactionManager db2TransactionManager(
+            EntityManagerFactory db2EntityManager) {
+
+        return new JpaTransactionManager(db2EntityManager);
+    }
+}
+✅ Step 4: Package Structure (Very Important)
+com.example
+ ├── entity
+ │    ├── db1
+ │    └── db2
+ ├── repo
+ │    ├── db1
+ │    └── db2
+✅ Step 5: Use Repositories
+@Autowired
+private UserRepository userRepository;   // DB1
+
+@Autowired
+private OrderRepository orderRepository; // DB2
+======================================================================
+
+Kubernetes
+DEV : ssh ip-*****************.ec2.internal
+ 
+ 
+sudo -i
+ 
+kubectl get pod
+
+kubectl logs -f person-statefulset-0
+kubectl logs -f school-statefulset-0
+kubectl logs -f school-statefulset-0
+kubectl logs -f award-statefulset-0
+
+
+==========================================================================
+
+“Blue-Green deployment uses two identical environments and switches traffic instantly from old to new version, ensuring zero downtime and easy rollback. Canary deployment, on the other hand, gradually shifts traffic to the new version, allowing monitoring and reducing risk. I prefer Blue-Green for critical systems requiring fast rollback, and Canary for large-scale systems where gradual rollout and real-user validation are important.”
+
+==========================================================================
+
+What is Feature Toggle? (Interview Definition)
+
+“Feature toggling is a mechanism to enable or disable application features dynamically at runtime without changing code or redeploying the application.”
+implaments using feature toggling 
+
+“Feature toggles act as a runtime kill switch”
+“We combine them with canary deployment for safe rollout”
+“We store flags in Redis for low-latency access”
+
+==================================================================
+
+Redis is an in-memory key-value data store used for caching and high-speed data access. It is preferred because of its extremely low latency, support for multiple data structures, and ability to reduce database load. It is commonly used for caching, session storage, rate limiting, and feature toggling in scalable systems
+
+======================================================================
+
+Before migrating to AWS, we performed a detailed assessment of existing systems, identified dependencies, and selected appropriate migration strategies using the 6R model. We designed secure VPC architecture, planned data migration using DMS, and set up CI/CD pipelines. We also implemented IAM roles, Secrets Manager for credentials, and CloudWatch for monitoring. Finally, we validated everything through testing and executed migration in phases with rollback planning
+
+================================================================
+
+To secure a domain with TLS, we map the domain via DNS to a load balancer, attach an SSL certificate from ACM, and enable HTTPS so that TLS handshake establishes an encrypted session between client and server.”
+========================================================================================
+
+1) JAVA 21 FEATURES
+Pocs
+
+2)Spring Reactive programming pocs ->read file from s3 bucket of size 2GB and upload to it
+
+===============================================================================
+
+Simple analogy
+ 
+Model			Analogy
+Spring MVC		One waiter per table
+CompletableFuture	Waiter can step away briefly
+WebFlux			Few waiters, customers signal when ready
+
+Spring MVC follows a blocking, thread-per-request model which is simple but not scalable under high I/O latency.
+ 
+ ===============================================================================
+Why traditional Spring MVC cannot do this efficiently
+ 
+Spring MVC			WebFlux
+One request = one thread	  	Few threads handle many requests
+Thread blocked on I/O	  	No blocking
+Poor under high concurrency	Designed for high concurrency
+Not backpressure-aware		Backpressure built-in
+
+
+Spring MVC => How it works
+==================================
+Still based on thread-per-request, BUT:
+You can offload tasks to another thread (thread pool).
+
+Spring MVC -> using completebleFuture
+===================================
+till based on thread-per-request, BUT:
+You can offload tasks to another thread (thread pool)
+🧠 Analogy expansion
+Waiter takes your order → gives it to kitchen
+Instead of waiting → goes to another table
+Later → checks if food is ready
+⚠️ Important reality
+You still need:
+Thread pool
+Context switching
+It’s asynchronous, but not truly non-blocking end-to-end
+CompletableFuture improves responsiveness by freeing the main thread, but underlying execution still consumes thread.
+
+Reactive programming
+============================================================================
+Uses event loop (like Netty)
+Very few threads handle thousands of requests
+Uses non-blocking I/O
+🧠 Analogy expansion
+Waiter takes order → gives you a token/buzzer
+Waiter moves on immediately
+Kitchen prepares food
+When ready → you (or system) get notified
+No waiting, no blocking
+
+Final Comparison (Interview Ready Table)
+Feature			Spring MVC	CompletableFuture	WebFlux
+Model			Blocking	Async (partial)		Fully Reactive
+Threads	1 per request	Multiple (pool)	Few (event loop)
+Scalability	Low	Medium	High
+Complexity	Simple	Medium	High
+Best Use	CRUD apps	Parallel calls	High traffic, streaming
+
+============================================================================
+
+ ==========================================================================================================================================================
+
+What is DRL?
+
+DRL = Drools Rule Language file used in
+Drools
+
+👉 Used to define business rules outside Java code
+ ==================================================================================
+Feature File (BDD)
+   ↓
+Cucumber Runner
+   ↓
+@CucumberContextConfiguration
+   ↓
+Spring Boot Context Loads
+   ↓
+@Autowired Beans Injected
+   ↓
+Step Definition Executes API
+   ↓
+Assertions
+=================================================================================
+
+webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT => it will create TestRestTemplate
+
+==================================================================================
