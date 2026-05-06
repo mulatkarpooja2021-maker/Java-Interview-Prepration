@@ -1,30 +1,3 @@
-prasad.keshav.sarang@accenture.com  => TIAA
-rithika.jadhav@accenture.com        =>DEUTSCHE BANK
-swathi.desigan@accenture.com        =>JPMC
-a.mohammad.irfan@accenture.com    =>Thrive
-
-shweta.bharti@accenture.com        =>Insurance domain Position filled up
-
-
-I worked on an Accenture Federal Services project supporting the U.S. Department of Education’s Federal Student Aid systems, primarily around the Common Origination and Disbursement (COD) platform. The system manages end‑to‑end processing of student financial aid such as Pell Grants and Direct Loans across different award years, ensuring compliance, accuracy, and scalability for millions of students and institutions.”
-
-
-I worked on an Accenture Federal Services project for the U.S. Department of Education. The project supports systems that help manage and distribute financial aid to students, such as grants and loans, for different academic years
-
-
-As a backend developer, I worked on building and enhancing REST APIs using Java and Spring Boot to support federal student aid processing workflows, with a strong focus on data integrity, performance, and security
-
-
-The system helps schools and the government manage student financial aid data accurately for each academic year, making sure students receive the right aid at the right time.
-
-
-
-
-
-CACIB LOT2 = > 4867710
-
-Devops > 4699848
-
 Spring Boot Deploy on EC2 
 https://youtu.be/uAHjGYujwxQ?si=RLi5lgd5SC95BB61
 ==============================================================
